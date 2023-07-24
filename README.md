@@ -155,7 +155,7 @@ N/A
 
 ## 🔭 Future Features <a name="future-features"></a>
 
--N/A
+Add console interactivity
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
