@@ -100,75 +100,45 @@ Learning how to work with objects on ruby
 
 In order to run this project you need:
 
-<!--
-Example command:
+In order to run this project you need:
 
-```sh
- gem install rails
-```
- -->
+✅ Install Ruby <br>
+✅ Create a repo on your repository files <br>
+✅ Clone or make a copy of this repo on your local machine <br>
 
 ### Setup
 
 Clone this repository to your desired folder:
 
-<!--
-Example commands:
 
 ```sh
-  cd my-folder
-  git clone git@github.com:myaccount/my-project.git
+  cd oop-ruby
+  git clone https://github.com/gersonhiggins/oop-ruby.git
 ```
---->
 
 ### Install
 
 Install this project with:
 
-<!--
-Example command:
-
-```sh
-  cd my-project
-  gem install
+```bash
+bundle install
 ```
---->
 
 ### Usage
 
-To run the project, execute the following command:
-
-<!--
-Example command:
-
-```sh
-  rails server
-```
---->
+You can use This as ruby oop example
 
 ### Run tests
 
 To run tests, run the following command:
 
-<!--
-Example command:
-
-```sh
-  bin/rails test test/models/article_test.rb
+```bash
+ rspec spec/*
 ```
---->
 
 ### Deployment
 
-You can deploy this project using:
-
-<!--
-Example:
-
-```sh
-
-```
- -->
+N/A
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -180,11 +150,6 @@ Example:
 
 - GitHub: [@gersonhiggins](https://github.com/gersonhiggins)
 
-👤 **Alejandro Muñoz**
-
--GitHub [@astroboyRoloaded](https://github.com/astroboyReloaded)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FUTURE FEATURES -->
 
