@@ -1,4 +1,4 @@
-# Ruby Project
+# OOP Ruby Project
 
 ## Getting Started
 
@@ -57,9 +57,9 @@ After you're finished please remove all the comments and instructions!
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 [ruby-morsecode] <a name="about-project"></a>
+# 📖 [oop-ruby] <a name="about-project"></a>
 
-morse code translator with ruby
+Object Oriented Programming with RUBY
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -78,7 +78,7 @@ Ruby
 
 ### Key Features <a name="key-features"></a>
 
-Translate from Morse to normal alphabet
+Learning how to work with objects on ruby
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
