@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'nameable'
 
 # Person represents an individual with attributes such as name, age, and parent_permission.

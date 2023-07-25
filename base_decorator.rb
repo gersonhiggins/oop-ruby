@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'nameable'
 
 # BaseDecorator is a base class for all decorators.
