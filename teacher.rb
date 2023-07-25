@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'person'
 
 # Teacher is a class representing a teacher, which inherits from Person.

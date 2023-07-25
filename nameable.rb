@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Nameable is an interface representing objects with a correct_name method.
 # All classes that inherit from Nameable should implement this method.
 class Nameable
