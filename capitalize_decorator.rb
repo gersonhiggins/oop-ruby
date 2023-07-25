@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'base_decorator'
 
 # CapitalizeDecorator is a decorator that capitalizes the output of the wrapped object's correct_name method.

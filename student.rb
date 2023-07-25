@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'person'
 
 # Student is a class representing a student, which inherits from Person.

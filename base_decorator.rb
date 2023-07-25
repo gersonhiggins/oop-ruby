@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'nameable'
 
 # BaseDecorator is a base class for all decorators.
@@ -7,6 +5,7 @@ require_relative 'nameable'
 class BaseDecorator < Nameable
   # Initializes a new BaseDecorator with a nameable object to be wrapped.
   def initialize(nameable)
+    super
     @nameable = nameable
   end
 

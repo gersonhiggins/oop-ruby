@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'nameable'
 
 # Person represents an individual with attributes such as name, age, and parent_permission.
@@ -12,6 +10,7 @@ class Person < Nameable
   # name: The name of the person (default is 'Unknown').
   # parent_permission: A boolean indicating if the person has parent permission (default is true).
   def initialize(age, name = 'Unknown', parent_permission: true)
+    super
     @id = generate_id
     @name = name
     @age = age

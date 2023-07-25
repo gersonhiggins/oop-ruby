@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'base_decorator'
 
 # TrimmerDecorator is a decorator that trims the output to a maximum of 10 characters
