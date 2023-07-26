@@ -1,14 +1,13 @@
+require_relative 'nameable'
 require_relative 'person'
 require_relative 'classroom'
 require_relative 'student'
 require_relative 'book'
 require_relative 'rental'
 
-# Your code using the defined classes goes here...
-
-classroom = Classroom.new('Math')
-student1 = Student.new(18, classroom, 'John')
-student2 = Student.new(17, classroom, 'Alice')
+classroom = Classroom.new("Math")
+student1 = Student.new(18, classroom, "John")  # Only pass the age as the argument.
+student2 = Student.new(17, classroom, "Alice") # Only pass the age as the argument.
 
 classroom.add_student(student1)
 classroom.add_student(student2)
