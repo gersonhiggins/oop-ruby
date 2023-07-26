@@ -13,13 +13,10 @@ class Student < Person
   end
 
   # Setter method for the classroom attribute.
-  def classroom=(classroom)
-    @classroom = classroom
-  end
+  attr_writer :classroom
 
   # A method specific to students, which returns "¯\(ツ)/¯".
   def play_hooky
     '¯\\(ツ)/¯'
   end
 end
-
