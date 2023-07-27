@@ -2,6 +2,7 @@ require_relative 'person'
 
 # Student is a class representing a student, which inherits from Person.
 class Student < Person
+  attr_reader :classroom
   # Initializes a new Student object.
   # classroom: The classroom in which the student belongs.
   # name: The name of the student (default is 'Unknown').

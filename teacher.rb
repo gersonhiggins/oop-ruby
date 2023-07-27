@@ -1,7 +1,6 @@
-require_relative 'person'
-
-# Teacher is a class representing a teacher, which inherits from Person.
 class Teacher < Person
+  attr_accessor :specialization
+
   # Initializes a new Teacher object.
   # specialization: The area of specialization for the teacher.
   def initialize(age, specialization, name = 'Unknown')
