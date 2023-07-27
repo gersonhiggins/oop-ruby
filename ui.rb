@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'book'
 require_relative 'person'
 require_relative 'rental'
@@ -22,23 +20,22 @@ def display_menu
 end
 
 # Helper method to get all people (including the ones that were added).
-def get_all_people
-  # Access the global variable directly to get the created_people array.
-  $created_people
+def all_people
+  @all_people ||= []
 end
 
 # Helper method to get all books (including the ones that were added).
-def get_all_books
-  $created_books
+def all_books
+  @all_books ||= []
 end
 
 # Helper method to create or retrieve a classroom with the given label.
 def get_or_create_classroom(label)
-  classroom = $all_classrooms.find { |c| c.label == label }
+  classroom = @all_classrooms.find { |c| c.label == label }
   return classroom if classroom
 
   classroom = Classroom.new(label)
-  $all_classrooms << classroom
+  @all_classrooms << classroom
   classroom
 end
 
@@ -53,25 +50,36 @@ def create_person
   puts "Enter the person's role (student or teacher):"
   role = gets.chomp.downcase
 
-  if role == 'student'
-    puts 'Enter the classroom label for the student:'
-    classroom_label = gets.chomp
-    classroom = get_or_create_classroom(classroom_label)
+  create_person_by_role(role, name, age)
+end
 
-    person = Student.new(age, classroom, name)
-  elsif role == 'teacher'
-    puts "Enter the teacher's specialization:"
-    specialization = gets.chomp
+  private
 
-    person = Teacher.new(age, specialization, name)
+def create_person_by_role(role, name, age)
+  case role
+  when 'student'
+    create_student_person(name, age)
+  when 'teacher'
+    create_teacher_person(name, age)
   else
     puts 'Invalid role. Person not created.'
-    return
   end
+end
 
-  # Add the created person to the global created_people array.
-  $created_people << person
+def create_student_person(name, age)
+  puts 'Enter the classroom label for the student:'
+  classroom_label = gets.chomp
+  classroom = get_or_create_classroom(classroom_label)
+  person = Student.new(age, classroom, name)
+  all_people << person
+  puts 'Person created successfully!'
+end
 
+def create_teacher_person(name, age)
+  puts "Enter the teacher's specialization:"
+  specialization = gets.chomp
+  person = Teacher.new(age, specialization, name)
+  all_people << person
   puts 'Person created successfully!'
 end
 
@@ -84,81 +92,131 @@ def create_book
   book = Book.new(title, author)
   puts "Book '#{book.title}' by #{book.author}"
 
-  $created_books << book
+  all_books << book
 end
 
 # Helper method to create a new Rental.
-# Helper method to create a new Rental.
 def create_rental
   puts 'List of available books:'
-  # Assuming you have a method to get all available books.
-  # Replace 'get_all_books' with the appropriate method.
-  available_books = get_all_books
-  if available_books.empty?
-    puts 'No books available for rental.'
-    return
-  end
+  return puts 'No books available for rental.' if all_books.empty?
 
-  available_books.each_with_index { |book, index| puts "#{index + 1}. #{book.title}" }
+  list_all_books
+  selected_book = prompt_for_book
+  return unless selected_book
 
+  complete_rental(selected_book)
+end
+
+def complete_rental(selected_book)
+  puts 'List of people:'
+  return puts 'No people available for rental.' if all_people.empty?
+
+  list_all_people
+  selected_person = prompt_for_person
+  return unless selected_person
+
+  date = prompt_for_rental_date
+  create_and_display_rental(selected_book, selected_person, date)
+end
+
+def prompt_for_book
+  book_index = prompt_for_book_index
+  return nil unless book_index
+
+  all_books[book_index]
+end
+
+def prompt_for_person
+  person_index = prompt_for_person_index
+  return nil unless person_index
+
+  all_people[person_index]
+end
+
+def create_and_display_rental(book, person, date)
+  rental = Rental.new(date, book, person)
+  puts "Rental created: '#{rental.book.title}' rented by #{rental.person.name} on #{rental.date}."
+end
+
+# Helper method to list all available books.
+def list_all_books
+  all_books.each_with_index { |book, index| puts "#{index + 1}. #{book.title}" }
+end
+
+# Helper method to prompt the user for the book index.
+def prompt_for_book_index
   print 'Enter the index of the book to rent: '
   book_index = gets.chomp.to_i - 1
 
-  if book_index.negative? || book_index >= available_books.length
+  if book_index.negative? || book_index >= all_books.length
     puts 'Invalid book index.'
-    return
+    return nil
   end
 
-  selected_book = available_books[book_index]
+  book_index
+end
 
-  puts 'List of people:'
-  # Assuming you have a method to get all people.
-  # Replace 'get_all_people' with the appropriate method.
-  all_people = get_all_people
-  if all_people.empty?
-    puts 'No people available for rental.'
-    return
-  end
-
+# Helper method to list all available people.
+def list_all_people
   all_people.each_with_index { |person, index| puts "#{index + 1}. #{person.name}" }
+end
 
+# Helper method to prompt the user for the person index.
+def prompt_for_person_index
   print 'Enter the index of the person to rent the book: '
   person_index = gets.chomp.to_i - 1
 
-  if person_index.negative? || person_index >= all_people.length
+  if person_index == -1
+    puts 'Operation canceled.'
+    return nil
+  elsif person_index.negative? || person_index >= all_people.length
     puts 'Invalid person index.'
-    return
+    return prompt_for_person_index
   end
 
-  selected_person = all_people[person_index]
+  person_index
+end
 
+# Helper method to prompt the user for the rental date.
+def prompt_for_rental_date
   print 'Enter the rental date (YYYY-MM-DD): '
-  date = gets.chomp
-
-  rental = Rental.new(date, selected_book, selected_person)
-  puts "Rental created: '#{rental.book.title}' rented by #{rental.person.name} on #{rental.date}."
+  gets.chomp
 end
 
 # Helper method to list all rentals for a given person.
 def list_rentals_for_person
   puts 'List of people:'
-  # Assuming you have a method to get all people.
-  # Replace 'get_all_people' with the appropriate method.
-  all_people = get_all_people
   all_people.each_with_index { |person, index| puts "#{index + 1}. #{person.name}" }
 
-  print 'Enter the index of the person to view rentals: '
-  person_index = gets.chomp.to_i - 1
-  selected_person = all_people[person_index]
+  selected_person = select_person
+  return unless selected_person
 
   puts "Rentals for #{selected_person.name}:"
   selected_person.rentals.each { |rental| puts "#{rental.book.title} (#{rental.date})" }
 end
 
+# Helper method to select a person based on user input.
+def select_person
+  print 'Enter the index of the person to view rentals (or 0 to cancel): '
+  person_index = gets.chomp.to_i - 1
+
+  if person_index == -1
+    puts 'Operation canceled.'
+    return nil
+  elsif person_index.negative? || person_index >= all_people.length
+    puts 'Invalid person index.'
+    return select_person
+  end
+
+  all_people[person_index]
+end
+
+
 # Initialize an empty array to store the created people.
-$created_people = []
-$all_classrooms = []
-$created_books = []
+@created_people = []
+@all_classrooms = []
+@created_books = []
+
 # Main program loop
 loop do
   choice = display_menu
@@ -166,11 +224,9 @@ loop do
   case choice
   when 1
     # List all books.
-    all_books = get_all_books
     all_books.each { |book| puts "#{book.title} by #{book.author}" }
   when 2
     # List all people.
-    all_people = get_all_people
     all_people.each do |person|
       if person.is_a?(Student)
         puts "#{person.name} (Age: #{person.age}, Role: Student, Classroom: #{person.classroom.label})"
@@ -194,7 +250,5 @@ loop do
     # Exit the program.
     puts 'Exiting...'
     break
-  else
-    puts 'Invalid choice. Please try again.'
   end
 end
