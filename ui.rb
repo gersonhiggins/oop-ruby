@@ -211,7 +211,6 @@ def select_person
   all_people[person_index]
 end
 
-
 # Initialize an empty array to store the created people.
 @created_people = []
 @all_classrooms = []

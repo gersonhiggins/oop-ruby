@@ -2,7 +2,8 @@ require_relative 'person'
 
 # Student is a class representing a student, which inherits from Person.
 class Student < Person
-  attr_reader :classroom
+  attr_accessor :classroom
+
   # Initializes a new Student object.
   # classroom: The classroom in which the student belongs.
   # name: The name of the student (default is 'Unknown').
@@ -12,9 +13,6 @@ class Student < Person
     @classroom = classroom
     classroom.students.push(self) unless classroom.students.include?(self)
   end
-
-  # Setter method for the classroom attribute.
-  attr_writer :classroom
 
   # A method specific to students, which returns "¯\(ツ)/¯".
   def play_hooky
